@@ -1,0 +1,101 @@
+# Dev → UAT → Prod pipeline for coralpetal.ai
+#
+#   push to dev  → checks → deploy to Development  (litandlatte/coralpetal-dev  · dev.coralpetal.ai)
+#   push to uat  → checks → deploy to UAT          (litandlatte/coralpetal-uat  · uat.coralpetal.ai)
+#   push to main → checks → WAIT FOR APPROVAL → deploy to Production (this repo · coralpetal.ai)
+#   pull request → checks only
+#
+# Repo variable DOMAINS_LIVE=true switches every environment onto its custom domain.
+# Until then each one is served at litandlatte.github.io/<repo>/.
+
+name: Build & deploy
+
+on:
+  push:
+    branches: [dev, uat, main]
+  pull_request:
+    branches: [dev, uat, main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.ref_name }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Site checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: HTML, links and accessibility basics
+        run: python3 scripts/check_site.py site
+      - name: Build every environment (smoke test)
+        run: |
+          bash scripts/build_env.sh dev  /tmp/out-dev
+          bash scripts/build_env.sh uat  /tmp/out-uat
+          bash scripts/build_env.sh prod /tmp/out-prod
+          python3 scripts/check_site.py /tmp/out-prod
+
+  deploy-dev:
+    name: Deploy · Development
+    if: github.event_name != 'pull_request' && github.ref_name == 'dev'
+    needs: checks
+    runs-on: ubuntu-latest
+    environment:
+      name: development
+      url: ${{ vars.DOMAINS_LIVE == 'true' && 'https://dev.coralpetal.ai' || 'https://litandlatte.github.io/coralpetal-dev/' }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: bash scripts/build_env.sh dev _site "${{ vars.DOMAINS_LIVE == 'true' && 'dev.coralpetal.ai' || '' }}"
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          deploy_key: ${{ secrets.DEV_DEPLOY_KEY }}
+          external_repository: litandlatte/coralpetal-dev
+          publish_branch: gh-pages
+          publish_dir: ./_site
+          force_orphan: true
+          commit_message: "Deploy ${{ github.sha }} to development"
+
+  deploy-uat:
+    name: Deploy · UAT
+    if: github.event_name != 'pull_request' && github.ref_name == 'uat'
+    needs: checks
+    runs-on: ubuntu-latest
+    environment:
+      name: uat
+      url: ${{ vars.DOMAINS_LIVE == 'true' && 'https://uat.coralpetal.ai' || 'https://litandlatte.github.io/coralpetal-uat/' }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: bash scripts/build_env.sh uat _site "${{ vars.DOMAINS_LIVE == 'true' && 'uat.coralpetal.ai' || '' }}"
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          deploy_key: ${{ secrets.UAT_DEPLOY_KEY }}
+          external_repository: litandlatte/coralpetal-uat
+          publish_branch: gh-pages
+          publish_dir: ./_site
+          force_orphan: true
+          commit_message: "Deploy ${{ github.sha }} to UAT"
+
+  deploy-prod:
+    name: Deploy · Production
+    if: github.event_name != 'pull_request' && github.ref_name == 'main'
+    needs: checks
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    environment:
+      name: production
+      url: ${{ vars.DOMAINS_LIVE == 'true' && 'https://coralpetal.ai' || 'https://litandlatte.github.io/coralpetal.ai/' }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: bash scripts/build_env.sh prod _site "${{ vars.DOMAINS_LIVE == 'true' && 'coralpetal.ai' || '' }}"
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./_site
+          force_orphan: true
+          commit_message: "Deploy ${{ github.sha }} to production"
