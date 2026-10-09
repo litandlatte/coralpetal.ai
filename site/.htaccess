@@ -1,0 +1,32 @@
+# coralpetal.ai — Apache rules for Hostinger. Deployed with every environment.
+# HTTPS is forced by Hostinger (hPanel → Security → SSL → Force HTTPS), not here,
+# because the Hostinger CDN terminates TLS and a %{HTTPS} check here can loop.
+
+Options -Indexes
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # www → apex
+  RewriteCond %{HTTP_HOST} ^www\.coralpetal\.ai$ [NC]
+  RewriteRule ^ https://coralpetal.ai%{REQUEST_URI} [R=301,L]
+
+  # The dev/ and uat/ folders live inside the production docroot (Hostinger subdomain layout).
+  # On the production host they must not exist: serve 404 so they are reachable only on
+  # dev.coralpetal.ai / uat.coralpetal.ai.
+  RewriteCond %{HTTP_HOST} ^(www\.)?coralpetal\.ai$ [NC]
+  RewriteRule ^(dev|uat)(/.*)?$ - [R=404,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  <FilesMatch "\.(css|svg|png|jpg|webp|woff2)$">
+    Header set Cache-Control "public, max-age=86400"
+  </FilesMatch>
+  <FilesMatch "\.(html|json)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
