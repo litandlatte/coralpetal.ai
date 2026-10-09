@@ -1,52 +1,35 @@
 # coralpetal.ai
 
 Website for **The Coral Petal Company**: enterprise Agentic AI adoption.
-Plain static HTML/CSS in `site/`. No framework, no build tooling beyond `scripts/`.
-
-## Environments
-
-| Env | Branch | Hosted in | URL | Deploys |
-|---|---|---|---|---|
-| Development | `dev` | `litandlatte/coralpetal-dev` (gh-pages) | dev.coralpetal.ai | automatically on push |
-| UAT | `uat` | `litandlatte/coralpetal-uat` (gh-pages) | uat.coralpetal.ai | automatically on push |
-| Production | `main` | this repo (gh-pages) | coralpetal.ai | on push, **after approval** in GitHub |
-
-Dev and UAT show an environment banner, send `noindex`, and block crawlers in `robots.txt`.
-Each build writes `version.json` (env + commit) so you can see what is deployed where.
+Plain static HTML/CSS in `site/`. Hosted on **Hostinger** (Premium plan).
 
 ## How a change ships
 
-1. Commit to `dev` (or merge a feature branch into it) → live on Development.
-2. Open a PR `dev → uat`, merge → live on UAT. Review it there.
-3. Open a PR `uat → main`, merge → the production job waits → approve it under
-   **Actions → the run → Review deployments** → live on coralpetal.ai.
+1. Work on a branch (never directly on `main`).
+2. **Review locally:** `scripts/preview.sh` runs the checks, builds exactly what Production
+   would get, and opens http://localhost:8000.
+3. Open a pull request into `main` → **Site checks** run.
+4. Merge → the Production job **waits for Rohit's approval** (Actions → the run →
+   Review deployments) → deploys to Hostinger → confirms https://coralpetal.ai serves the
+   new commit (`/version.json`). The run fails if it does not.
 
-`uat` and `main` are protected: changes arrive only by pull request, and the **Site checks**
-job must pass.
+`main` is protected: changes arrive only by pull request, and Site checks must pass.
 
 ## Checks
 
-`scripts/check_site.py` runs on every push and PR: HTML structure, `<title>` and
-meta description, image alt text, broken internal links and in-page anchors.
+`scripts/check_site.py` — HTML structure, `<title>` and meta description, image alt text,
+broken internal links and in-page anchors. Runs on every PR and before every deploy.
 
-```
-python3 scripts/check_site.py site
-bash scripts/build_env.sh uat /tmp/out-uat     # preview any environment's build locally
-```
+## Hosting and deploy
 
-## Custom domains
+- Server folder: `~/domains/coralpetal.ai/public_html` (account `u574260001`, SSH port 65002).
+- `scripts/deploy_hostinger.sh` mirrors the build there with rsync over SSH. It **refuses
+  any other path** — `litandlatte.com` lives on the same hosting account.
+- Secrets/variables: `HOSTINGER_SSH_KEY` (deploy key), `HOSTINGER_HOST`, `HOSTINGER_PORT`,
+  `HOSTINGER_USER`, `HOSTINGER_KNOWN_HOSTS` (pinned server fingerprints).
+- HTTPS: Hostinger's free SSL, forced in hPanel. `.htaccess` sends www → apex and serves `404.html`.
 
-Repo variable `DOMAINS_LIVE` (`true`/unset) switches all three environments onto their
-custom domains. DNS lives at Hostinger:
+## History
 
-| Type | Name | Value |
-|---|---|---|
-| A | @ | 185.199.108.153 · 185.199.109.153 · 185.199.110.153 · 185.199.111.153 |
-| CNAME | www | litandlatte.github.io |
-| CNAME | dev | litandlatte.github.io |
-| CNAME | uat | litandlatte.github.io |
-
-## Secrets
-
-`DEV_DEPLOY_KEY` and `UAT_DEPLOY_KEY` are SSH deploy keys with write access to the
-dev/uat hosting repos. Production uses the built-in `GITHUB_TOKEN`.
+Dev and UAT environments ran briefly on 2026-10-09 and were retired the same day in favour of
+local review. Their server folders were moved (not deleted) to `~/retired/coralpetal.ai-2026-10-09/`.

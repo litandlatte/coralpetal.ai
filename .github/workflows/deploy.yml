@@ -1,27 +1,23 @@
-# Dev → UAT → Prod pipeline for coralpetal.ai, hosted on Hostinger (Premium plan, SSH + rsync)
+# coralpetal.ai — review locally, then release to Production on Hostinger.
 #
-#   push to dev  → checks → deploy Development  → https://dev.coralpetal.ai
-#   push to uat  → checks → deploy UAT          → https://uat.coralpetal.ai
-#   push to main → checks → WAIT FOR APPROVAL   → deploy Production → https://coralpetal.ai
-#   pull request → checks only
+#   pull request into main → Site checks
+#   push to main (merge)   → Site checks → WAIT FOR ROHIT'S APPROVAL → deploy → verify live commit
 #
-# Server layout (hPanel subdomains nest inside the prod docroot):
-#   ~/domains/coralpetal.ai/public_html        prod
-#   ~/domains/coralpetal.ai/public_html/uat    uat
-#   ~/domains/coralpetal.ai/public_html/dev    dev
+# Local review before any release:  scripts/preview.sh  →  http://localhost:8000
+# Hosting: Hostinger Premium, SSH + rsync into ~/domains/coralpetal.ai/public_html.
 # scripts/deploy_hostinger.sh refuses any other path (litandlatte.com shares this account).
 
 name: Build & deploy
 
 on:
   push:
-    branches: [dev, uat, main]
+    branches: [main]
   pull_request:
-    branches: [dev, uat, main]
+    branches: [main]
   workflow_dispatch:
 
 concurrency:
-  group: deploy-${{ github.ref_name }}
+  group: deploy-production
   cancel-in-progress: false
 
 permissions:
@@ -35,33 +31,30 @@ jobs:
       - uses: actions/checkout@v4
       - name: HTML, links and accessibility basics
         run: python3 scripts/check_site.py site
-      - name: Build every environment (smoke test)
+      - name: Production build
         run: |
-          bash scripts/build_env.sh dev  /tmp/out-dev
-          bash scripts/build_env.sh uat  /tmp/out-uat
           bash scripts/build_env.sh prod /tmp/out-prod
           python3 scripts/check_site.py /tmp/out-prod
-      - name: Deploy-path guard self-test
+      - name: Deploy script syntax
         run: bash -n scripts/deploy_hostinger.sh
 
   deploy:
-    name: Deploy · ${{ github.ref_name == 'main' && 'Production' || github.ref_name == 'uat' && 'UAT' || 'Development' }}
-    if: github.event_name != 'pull_request'
+    name: Deploy · Production
+    if: github.event_name != 'pull_request' && github.ref_name == 'main'
     needs: checks
     runs-on: ubuntu-latest
     environment:
-      name: ${{ github.ref_name == 'main' && 'production' || github.ref_name == 'uat' && 'uat' || 'development' }}
-      url: ${{ github.ref_name == 'main' && 'https://coralpetal.ai' || format('https://{0}.coralpetal.ai', github.ref_name) }}
+      name: production
+      url: https://coralpetal.ai
     env:
-      ENV_KEY: ${{ github.ref_name == 'main' && 'prod' || github.ref_name }}
-      SITE_URL: ${{ github.ref_name == 'main' && 'https://coralpetal.ai' || format('https://{0}.coralpetal.ai', github.ref_name) }}
+      SITE_URL: https://coralpetal.ai
       HOSTINGER_HOST: ${{ vars.HOSTINGER_HOST }}
       HOSTINGER_PORT: ${{ vars.HOSTINGER_PORT }}
       HOSTINGER_USER: ${{ vars.HOSTINGER_USER }}
     steps:
       - uses: actions/checkout@v4
       - name: Build
-        run: bash scripts/build_env.sh "$ENV_KEY" _site
+        run: bash scripts/build_env.sh prod _site
       - name: SSH setup (pinned host keys)
         env:
           KEY: ${{ secrets.HOSTINGER_SSH_KEY }}
@@ -71,7 +64,7 @@ jobs:
           printf '%s\n' "$KEY" > ~/.ssh/id && chmod 600 ~/.ssh/id
           printf '%s\n' "$KNOWN" > ~/.ssh/known_hosts
       - name: Deploy to Hostinger
-        run: bash scripts/deploy_hostinger.sh "$ENV_KEY" _site
+        run: bash scripts/deploy_hostinger.sh _site
       - name: Verify the live site serves this commit
         run: |
           want="${GITHUB_SHA:0:7}"
