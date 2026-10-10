@@ -24,8 +24,10 @@ REMOTE="${HOSTINGER_USER}@${HOSTINGER_HOST}"
 $SSH "$REMOTE" "test -d '$TARGET'" || { echo "target missing on server: $TARGET" >&2; exit 5; }
 
 # Subdomains created in hPanel live in folders INSIDE this docroot. --delete must never
-# touch them. Add a name here whenever a new subdomain is created.
-SUBDOMAIN_FOLDERS=(academy career)
+# touch them. Add a name here whenever a new subdomain is created. `career` stays listed after
+# the subdomain was replaced by `careers` (2026-10-10): its folder is still on the server, and
+# dropping it from the list would let --delete remove it for good.
+SUBDOMAIN_FOLDERS=(academy career careers)
 for d in "${SUBDOMAIN_FOLDERS[@]}"; do
   [ ! -e "$SRC/$d" ] || { echo "build must not contain /$d — it belongs to $d.coralpetal.ai" >&2; exit 6; }
 done
