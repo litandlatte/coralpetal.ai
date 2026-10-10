@@ -25,6 +25,9 @@ broken internal links and in-page anchors. Runs on every PR and before every dep
 - Server folder: `~/domains/coralpetal.ai/public_html` (account `u574260001`, SSH port 65002).
 - `scripts/deploy_hostinger.sh` mirrors the build there with rsync over SSH. It **refuses
   any other path** — `litandlatte.com` lives on the same hosting account.
+- Subdomains (`academy.`, `career.`) are hPanel folders inside that docroot. The deploy
+  leaves them alone via `SUBDOMAIN_FOLDERS` in the script — **add every new subdomain there**
+  before the next release, or `--delete` will wipe it.
 - Secrets/variables: `HOSTINGER_SSH_KEY` (deploy key), `HOSTINGER_HOST`, `HOSTINGER_PORT`,
   `HOSTINGER_USER`, `HOSTINGER_KNOWN_HOSTS` (pinned server fingerprints).
 - HTTPS: Hostinger's free SSL, forced in hPanel. `.htaccess` sends www → apex and serves `404.html`.
