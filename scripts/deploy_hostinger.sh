@@ -23,8 +23,17 @@ REMOTE="${HOSTINGER_USER}@${HOSTINGER_HOST}"
 # The remote folder must already exist (created by hPanel); never create paths blindly.
 $SSH "$REMOTE" "test -d '$TARGET'" || { echo "target missing on server: $TARGET" >&2; exit 5; }
 
+# Subdomains created in hPanel live in folders INSIDE this docroot. --delete must never
+# touch them. Add a name here whenever a new subdomain is created.
+SUBDOMAIN_FOLDERS=(academy career)
+for d in "${SUBDOMAIN_FOLDERS[@]}"; do
+  [ ! -e "$SRC/$d" ] || { echo "build must not contain /$d — it belongs to $d.coralpetal.ai" >&2; exit 6; }
+done
+EXCLUDES=(--exclude=/.well-known/)
+for d in "${SUBDOMAIN_FOLDERS[@]}"; do EXCLUDES+=("--exclude=/$d/"); done
+
 # --delete keeps the docroot an exact mirror of the build, except .well-known/
-# (Hostinger SSL validation files).
-rsync -rlz --checksum --delete --chmod=D755,F644 --exclude=/.well-known/ \
+# (Hostinger SSL validation files) and the subdomain folders above.
+rsync -rlz --checksum --delete --chmod=D755,F644 "${EXCLUDES[@]}" \
   -e "$SSH" "$SRC"/ "$REMOTE:$TARGET/"
 echo "deployed prod → $TARGET"
