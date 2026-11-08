@@ -84,7 +84,7 @@
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
   <script>
     (function () {
-      var COURSES = { "statistics-fundamental": "Statistics Fundamentals" };
+      var COURSES = {"statistics-fundamental": "Statistics Fundamentals", "machine-learning-fundamental": "Machine Learning Fundamentals", "mlops": "MLOps", "automl": "AutoML", "generative-ai-fundamental": "Generative AI Fundamentals", "llmops": "LLMOps", "agentic-ai-fundamental": "Agentic AI Fundamentals", "az-104": "AZ-104: Azure Administrator", "az-305": "AZ-305: Azure Solutions Architect", "ai-103": "AI-103: Azure AI Apps and Agents Developer", "ab-100": "AB-100: Agentic AI Business Solutions Architect", "h3-geospatial": "H3 Geospatial Indexing"};
       var course = new URLSearchParams(location.search).get("course");
       var name = COURSES[course];
       if (name) {
