@@ -7,7 +7,7 @@
        "tools": "Python: pandas, SciPy, statsmodels",
        "prerequisites": ["School-level algebra", "Basic Python (variables, lists, functions) for the exercises", "No prior statistics needed"],
        "audience": "Aspiring data scientists, analysts, and engineers moving into machine learning.",
-       "notes": "https://app.tana.inc/shared/statistics-notes/MkVDTk5lMm1QbmJrLzNwVWRJTlEtYmVIMg==",
+       "notes": "https://app.tana.inc/shared/statistics-notes/b0tlX1ZCcXJ0OENpLzNwVWRJTlEtYmVIMg==",
        "slides": "https://www.figma.com/slides/jZNxhatjJNglRjZ5YIIKAj",
        "modules": [
          ["Why statistics matters", "Turning data into decisions while being honest about uncertainty, and the mistakes that cost the most."],
