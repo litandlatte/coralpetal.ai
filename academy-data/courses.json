@@ -45,7 +45,16 @@
        "slides": "https://www.figma.com/slides/3X0L09szFnLvQKO6MJfNhI",
        "modules": [["What AutoML is"], ["What gets automated"], ["How it works under the hood"], ["Popular tools"], ["When to use AutoML"], ["Limitations"], ["The data scientist's role with AutoML"], ["Best practices"]]}
     ]},
-    {"slug": "deep-learning", "name": "Deep Learning", "motif": "scatter", "courses": []},
+    {"slug": "deep-learning", "name": "Deep Learning", "motif": "scatter", "courses": [
+      {"slug": "deep-learning-fundamental", "title": "Deep Learning Fundamentals", "level": "Intermediate",
+       "summary": "How neural networks learn: building blocks, training and regularization, convolutional and sequence models, transformers and transfer learning, and the tools to use them well.",
+       "tools": "Python: PyTorch, Hugging Face",
+       "prerequisites": ["Machine Learning Fundamentals, or equivalent", "Python and NumPy"],
+       "audience": "Data scientists and ML engineers moving from classical models to neural networks.",
+       "notes": "",
+       "slides": "https://www.figma.com/slides/sURhFGTYbYQMAcoknKLt9D",
+       "modules": [["What deep learning is"], ["Neural network building blocks"], ["Training: loss, backprop, optimizers"], ["Regularization and generalization"], ["Convolutional networks"], ["Sequence models and attention"], ["Transformers and transfer learning"], ["Tools and best practices"]]}
+    ]},
     {"slug": "generative-ai", "name": "Generative AI", "motif": "tokens", "courses": [
       {"slug": "generative-ai-fundamental", "title": "Generative AI Fundamentals", "level": "Beginner",
        "summary": "What generative AI is, the main model families, how large language models work, adapting them to your use case, evaluation and responsible use.",
@@ -74,7 +83,16 @@
        "slides": "https://www.figma.com/slides/KEDdETT6gguticflBuu7jI",
        "modules": [["What agentic AI is"], ["Core building blocks"], ["Agent design patterns"], ["Multi-agent systems"], ["Frameworks and protocols"], ["Data science use cases"], ["Evaluation and reliability"], ["Safety, governance and best practices"]]}
     ]},
-    {"slug": "cloud-computing", "name": "Cloud Computing", "motif": "badge", "courses": []},
+    {"slug": "cloud-computing", "name": "Cloud Computing", "motif": "badge", "courses": [
+      {"slug": "cloud-computing-fundamental", "title": "Cloud Computing Fundamentals", "level": "Beginner",
+       "summary": "What the cloud is and how it is priced, the service models, core compute, storage and networking, data and AI services, security, and cost management.",
+       "tools": "Azure, AWS or Google Cloud free tier",
+       "prerequisites": ["Basic IT and networking concepts", "No cloud experience needed"],
+       "audience": "Data scientists, analysts and engineers who need to build and run work on the cloud.",
+       "notes": "",
+       "slides": "https://www.figma.com/slides/Mm6TPb9YW3EVvMNIlgduLe",
+       "modules": [["What cloud computing is"], ["Service models (IaaS, PaaS, SaaS)"], ["Core services: compute, storage, networking"], ["Data and analytics services"], ["ML and AI on the cloud"], ["Security and identity"], ["Cost management"], ["Best practices and pitfalls"]]}
+    ]},
     {"slug": "certifications", "name": "Certifications", "motif": "badge", "courses": [
       {"slug": "az-104", "title": "AZ-104: Azure Administrator", "level": "Intermediate",
        "summary": "Exam preparation for Microsoft AZ-104: identities and governance, storage, compute, virtual networking, monitoring and backup.",
