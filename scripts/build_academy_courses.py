@@ -173,13 +173,6 @@ def course_page(sec, c):
                   audience=escape(c["audience"]), material=material)
 
 
-def notes_page(sec, c):
-    return render("notes.html", page_title=escape(f'{c["title"]} notes | Coral Petal AI Academy'),
-                  page_description=escape(f'{c["title"]} course notes.'), page_path=f'/{sec["slug"]}/{c["slug"]}/notes/',
-                  section_slug=sec["slug"], section_name=escape(sec["name"]), slug=c["slug"], title=escape(c["title"]),
-                  embed_url=escape(c["notes_embed"]))
-
-
 def stub(title, label, url):
     return render("shortlink.html", title=escape(title), label=label, label_lower=label.lower(), url=escape(url))
 
@@ -194,15 +187,11 @@ def main():
             write(d / "index.html", course_page(sec, c))
             write(A / "img" / "tutorials" / f'{c["slug"]}.svg', poster(c, sec["motif"]))
             targets = {"tutorial": LOGIN + c["slug"]}
-            if c.get("notes") or c.get("notes_embed"):
-                targets["notes"] = c.get("notes_embed") or c["notes"]
+            if c.get("notes"):
+                targets["notes"] = c["notes"]
             if c.get("slides"):
                 targets["slides"] = c["slides"]
             for kind, url in targets.items():
-                if kind == "notes" and c.get("notes_embed"):
-                    # Shown inside an academy page, so the address stays on academy.coralpetal.ai.
-                    write(d / kind / "index.html", notes_page(sec, c))
-                    continue
                 write(d / kind / "index.html", stub(c["title"], kind.capitalize(), url))
                 redirects.append(f'  RedirectMatch 302 ^/{sec["slug"]}/{c["slug"]}/{kind}/?$ {url}')
             names[c["slug"]] = c["title"]

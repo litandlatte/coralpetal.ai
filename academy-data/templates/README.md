@@ -14,8 +14,7 @@ from these files plus `../courses.json`. **Change a template once, then run**
 | 3 | `course.html` | `/<section>/<course>/` course page |
 | 4 | `section.html` | `/<section>/` section page with course boxes |
 | 5 | `poster.svg` | `/img/tutorials/<course>.svg` video poster |
-| 6 | `notes.html` | `/<section>/<course>/notes/` page that shows tana.pub notes inside the academy (when `notes_embed` is set) |
-| 7 | `shortlink.html` | `/<section>/<course>/{notes,slides,tutorial}/` fallback redirect page |
+| 6 | `shortlink.html` | `/<section>/<course>/{notes,slides,tutorial}/` fallback redirect page |
 
 Placeholders are `{{name}}`; `{{> _head}}` and `{{> _foot}}` include the shared parts.
 Lists (modules, prerequisites, course material boxes, course rows) are rendered as HTML by the
