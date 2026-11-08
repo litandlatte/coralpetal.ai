@@ -1,0 +1,59 @@
+{{> _head}}  <main id="main">
+    <section class="section-page course-page">
+      <div class="wrap">
+        <p class="crumbs"><a href="/">Academy</a> / <a href="/{{section_slug}}/">{{section_name}}</a> / {{title}}</p>
+        <h1>{{title}}</h1>
+        <p class="lede">{{summary}}</p>
+        <ul class="course-facts">
+          <li><span>Level</span>{{level}}</li>
+          <li><span>Modules</span>{{module_count}}</li>
+          <li><span>Tools</span>{{tools}}</li>
+        </ul>
+
+        <div class="course-layout">
+          <div class="course-main">
+            <section class="tutorial-box" id="tutorial" aria-labelledby="tutorial-h">
+              <a class="tutorial-frame tutorial-poster" href="{{tutorial_url}}" aria-label="Play the {{title}} tutorial (sign-in required)">
+                <img src="/img/tutorials/{{slug}}.svg" alt="" width="1280" height="720">
+                <span class="play" aria-hidden="true"></span>
+                <span class="lock-note">Sign in to watch</span>
+              </a>
+              <div class="tutorial-caption">
+                <h2 id="tutorial-h">Tutorial</h2>
+                <p>Work through the course module by module. Use the notes and slides alongside the video.</p>
+              </div>
+            </section>
+
+            <section class="course-block">
+              <h2>What you'll learn</h2>
+              <ol class="modules">
+{{modules}}
+              </ol>
+            </section>
+          </div>
+
+          <aside class="course-side">
+            <div class="side-box">
+              <h2>Prerequisites</h2>
+              <ul>
+{{prerequisites}}
+              </ul>
+            </div>
+            <div class="side-box">
+              <h2>Who it's for</h2>
+              <p>{{audience}}</p>
+            </div>
+            <div class="side-box side-refs">
+              <h2>Course material</h2>
+{{material}}            </div>
+            <div class="side-box side-cta">
+              <p>Questions about this course or training for your team?</p>
+              <a class="btn btn-small" href="mailto:academy@coralpetal.ai">Talk to us</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+{{> _foot}}

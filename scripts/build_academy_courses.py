@@ -3,14 +3,13 @@
 
   python3 scripts/build_academy_courses.py
 
-Source of truth: academy-data/courses.json. Writes into academy/ (commit the result):
-  academy/<section>/index.html                     section page with course boxes
-  academy/<section>/<course>/index.html            course page (tutorial focus)
-  academy/<section>/<course>/{notes,slides,tutorial}/index.html   fallback redirects
-  academy/img/tutorials/<course>.svg               tutorial poster
-  academy/.htaccess                                block between the BEGIN/END markers
-  academy/login/index.html                         the COURSES name map
-Header, footer and each section's intro line are kept from the existing pages.
+Inputs (the course TEMPLATE lives here, change it once for every course):
+  academy-data/courses.json            sections and courses (content)
+  academy-data/templates/*.html|.svg   page templates (layout), see templates/README.md
+Writes into academy/ (commit the result):
+  <section>/index.html, <section>/<course>/index.html,
+  <section>/<course>/{notes,slides,tutorial}/index.html, img/tutorials/<course>.svg,
+  the short-link block in .htaccess and the course names in login/index.html.
 """
 import json
 import math
@@ -20,21 +19,29 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 A = ROOT / "academy"
-DATA = json.loads((ROOT / "academy-data" / "courses.json").read_text(encoding="utf-8"))
+D = ROOT / "academy-data"
+T = D / "templates"
+DATA = json.loads((D / "courses.json").read_text(encoding="utf-8"))
 LOGIN = "/login/?course="
 
-TEMPLATE = (A / "login" / "index.html").read_text(encoding="utf-8")
-HEAD = TEMPLATE[: TEMPLATE.index('  <main id="main">')]
-FOOT = TEMPLATE[TEMPLATE.index("  <footer"):]
-_LOGIN_JS = "  <script>\n    (function"
-FOOT = FOOT[: FOOT.index(_LOGIN_JS)] + "</body>\n</html>\n" if _LOGIN_JS in FOOT else FOOT
+
+def tpl(name):
+    return (T / name).read_text(encoding="utf-8")
 
 
-def head(title, desc, path):
-    h = re.sub(r"<title>[^<]*</title>", f"<title>{escape(title)}</title>", HEAD)
-    h = re.sub(r'<meta name="description" content="[^"]*">', f'<meta name="description" content="{escape(desc)}">', h)
-    h = re.sub(r'<link rel="canonical" href="[^"]*">', f'<link rel="canonical" href="https://academy.coralpetal.ai{path}">', h)
-    return h
+PARTIALS = {"_head": tpl("_head.html"), "_foot": tpl("_foot.html")}
+
+
+def render(name, **values):
+    """Fill {{> partial}} includes, then {{key}} placeholders. Values are inserted as given."""
+    text = tpl(name)
+    text = re.sub(r"\{\{> *(\w+) *\}\}", lambda m: PARTIALS[m.group(1)], text)
+    def sub(m):
+        key = m.group(1)
+        if key not in values:
+            raise KeyError(f"{name}: no value for {{{{{key}}}}}")
+        return str(values[key])
+    return re.sub(r"\{\{(\w+)\}\}", sub, text).rstrip("\n") + "\n"
 
 
 def write(path, text):
@@ -111,27 +118,11 @@ def wrap_title(title, width=17):
 def poster(course, kind):
     lines = wrap_title(course["title"])
     size, step = (56, 66) if len(lines) <= 3 else (46, 56)
-    t = "".join(f'<text x="80" y="{200 + i * step}" fill="#ffffff" font-size="{size}" font-weight="700">{escape(l)}</text>' for i, l in enumerate(lines))
-    sub_y = 200 + len(lines) * step - 4
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-label="{escape(course["title"])} tutorial">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
-    <linearGradient id="fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2603f" stop-opacity=".55"/><stop offset="1" stop-color="#f2603f" stop-opacity="0"/></linearGradient>
-  </defs>
-  <rect width="1280" height="720" fill="url(#bg)"/>
-  {motif(kind)}
-  <g font-family="Inter, Arial, sans-serif">
-    <text x="80" y="110" fill="#f2603f" font-size="22" font-weight="700" letter-spacing="4">CORAL PETAL AI ACADEMY</text>
-    {t}
-    <text x="80" y="{sub_y}" fill="#cbd5e1" font-size="26">Module 1 · {escape(course["modules"][0][0])}</text>
-  </g>
-  <rect x="0" y="704" width="1280" height="16" fill="#1e293b"/>
-  <rect x="0" y="704" width="140" height="16" fill="#f2603f"/>
-</svg>
-'''
+    title_lines = "".join(f'<text x="80" y="{200 + i * step}" fill="#ffffff" font-size="{size}" font-weight="700">{escape(l)}</text>' for i, l in enumerate(lines))
+    return render("poster.svg", title=escape(course["title"]), motif=motif(kind), title_lines=title_lines,
+                  subtitle_y=200 + len(lines) * step - 4, first_module=escape(course["modules"][0][0]))
 
 
-# ---------- pages ----------
 def section_page(sec, all_secs):
     others = "\n".join(f'          <li><a href="/{s["slug"]}/">{escape(s["name"])}</a></li>' for s in all_secs if s["slug"] != sec["slug"])
     if sec["courses"]:
@@ -144,7 +135,7 @@ def section_page(sec, all_secs):
                 <span class="course-row-go" aria-hidden="true">→</span>
               </a>
             </li>''' for c in sec["courses"])
-        body = f'''        <div class="course-list">
+        courses = f'''        <div class="course-list">
           <p class="eyebrow">Courses</p>
           <ul>
 {rows}
@@ -152,120 +143,38 @@ def section_page(sec, all_secs):
         </div>
 '''
     else:
-        body = '''        <div class="soon-box">
+        courses = '''        <div class="soon-box">
           <h2>Courses are being prepared</h2>
           <p>Courses for this section are being written. Write to academy@coralpetal.ai if there is a topic you want covered first.</p>
         </div>
 '''
-    lede = existing_lede(sec["slug"], sec["name"])
-    return head(f'{sec["name"]} | Coral Petal AI Academy', f'{sec["name"]} courses at Coral Petal AI Academy.', f'/{sec["slug"]}/') + f'''  <main id="main">
-    <section class="section-page">
-      <div class="wrap">
-        <p class="crumbs"><a href="/">Academy</a> / {escape(sec["name"])}</p>
-        <h1>{escape(sec["name"])}</h1>
-        <p class="lede">{lede}</p>
-
-{body}
-        <div class="related">
-          <p class="eyebrow">Other sections</p>
-          <ul>
-{others}
-          </ul>
-        </div>
-      </div>
-    </section>
-  </main>
-
-''' + FOOT
+    return render("section.html", page_title=escape(f'{sec["name"]} | Coral Petal AI Academy'),
+                  page_description=escape(f'{sec["name"]} courses at Coral Petal AI Academy.'), page_path=f'/{sec["slug"]}/',
+                  section_name=escape(sec["name"]), lede=existing_lede(sec["slug"], sec["name"]),
+                  courses=courses, other_sections=others)
 
 
 def course_page(sec, c):
     base = f'/{sec["slug"]}/{c["slug"]}/'
-    mods = "\n".join(
+    modules = "\n".join(
         f'            <li><span class="mod-n">{i + 1:02d}</span><div><h3>{escape(m[0])}</h3>' + (f'<p>{escape(m[1])}</p>' if len(m) > 1 and m[1] else "") + "</div></li>"
         for i, m in enumerate(c["modules"]))
     prereq = "\n".join(f"                <li>{escape(p)}</li>" for p in c["prerequisites"])
-    refs = f'              <a class="ref-box ref-main" href="{LOGIN}{c["slug"]}"><span class="ref-title">Tutorial</span><span class="ref-sub">Sign in to watch the video course</span></a>\n'
+    material = f'              <a class="ref-box ref-main" href="{LOGIN}{c["slug"]}"><span class="ref-title">Tutorial</span><span class="ref-sub">Sign in to watch the video course</span></a>\n'
     if c.get("notes"):
-        refs += f'              <a class="ref-box" href="{base}notes"><span class="ref-title">Notes</span><span class="ref-sub">Read the course notes</span></a>\n'
+        material += f'              <a class="ref-box" href="{base}notes"><span class="ref-title">Notes</span><span class="ref-sub">Read the course notes</span></a>\n'
     if c.get("slides"):
-        refs += f'              <a class="ref-box" href="{base}slides"><span class="ref-title">Slides</span><span class="ref-sub">View the slide deck</span></a>\n'
-    return head(f'{c["title"]} | Coral Petal AI Academy', f'{c["title"]} at Coral Petal AI Academy. {c["summary"]}', base) + f'''  <main id="main">
-    <section class="section-page course-page">
-      <div class="wrap">
-        <p class="crumbs"><a href="/">Academy</a> / <a href="/{sec["slug"]}/">{escape(sec["name"])}</a> / {escape(c["title"])}</p>
-        <h1>{escape(c["title"])}</h1>
-        <p class="lede">{escape(c["summary"])}</p>
-        <ul class="course-facts">
-          <li><span>Level</span>{escape(c["level"])}</li>
-          <li><span>Modules</span>{len(c["modules"])}</li>
-          <li><span>Tools</span>{escape(c["tools"])}</li>
-        </ul>
-
-        <div class="course-layout">
-          <div class="course-main">
-            <section class="tutorial-box" id="tutorial" aria-labelledby="tutorial-h">
-              <a class="tutorial-frame tutorial-poster" href="{LOGIN}{c["slug"]}" aria-label="Play the {escape(c["title"])} tutorial (sign-in required)">
-                <img src="/img/tutorials/{c["slug"]}.svg" alt="" width="1280" height="720">
-                <span class="play" aria-hidden="true"></span>
-                <span class="lock-note">Sign in to watch</span>
-              </a>
-              <div class="tutorial-caption">
-                <h2 id="tutorial-h">Tutorial</h2>
-                <p>Work through the course module by module. Use the notes and slides alongside the video.</p>
-              </div>
-            </section>
-
-            <section class="course-block">
-              <h2>What you'll learn</h2>
-              <ol class="modules">
-{mods}
-              </ol>
-            </section>
-          </div>
-
-          <aside class="course-side">
-            <div class="side-box">
-              <h2>Prerequisites</h2>
-              <ul>
-{prereq}
-              </ul>
-            </div>
-            <div class="side-box">
-              <h2>Who it's for</h2>
-              <p>{escape(c["audience"])}</p>
-            </div>
-            <div class="side-box side-refs">
-              <h2>Course material</h2>
-{refs}            </div>
-            <div class="side-box side-cta">
-              <p>Questions about this course or training for your team?</p>
-              <a class="btn btn-small" href="mailto:academy@coralpetal.ai">Talk to us</a>
-            </div>
-          </aside>
-        </div>
-      </div>
-    </section>
-  </main>
-
-''' + FOOT
+        material += f'              <a class="ref-box" href="{base}slides"><span class="ref-title">Slides</span><span class="ref-sub">View the slide deck</span></a>\n'
+    return render("course.html", page_title=escape(f'{c["title"]} | Coral Petal AI Academy'),
+                  page_description=escape(f'{c["title"]} at Coral Petal AI Academy. {c["summary"]}'), page_path=base,
+                  section_slug=sec["slug"], section_name=escape(sec["name"]), slug=c["slug"], title=escape(c["title"]),
+                  summary=escape(c["summary"]), level=escape(c["level"]), module_count=len(c["modules"]),
+                  tools=escape(c["tools"]), tutorial_url=LOGIN + c["slug"], modules=modules, prerequisites=prereq,
+                  audience=escape(c["audience"]), material=material)
 
 
 def stub(title, label, url):
-    return f'''<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>{escape(title)} {label} | Coral Petal AI Academy</title>
-  <meta name="description" content="{escape(title)} {label.lower()}.">
-  <meta name="robots" content="noindex">
-  <meta http-equiv="refresh" content="0; url={escape(url)}">
-</head>
-<body>
-  <p>Opening the {label.lower()}: <a href="{escape(url)}">continue</a>.</p>
-</body>
-</html>
-'''
+    return render("shortlink.html", title=escape(title), label=label, label_lower=label.lower(), url=escape(url))
 
 
 def main():
