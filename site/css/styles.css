@@ -186,3 +186,6 @@ a { color: inherit; }
   .foot { flex-direction: column; gap: 6px; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* Brand logo (2026-11-08): coral bloom photo, shown as a round mark. */
+.mark { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; display: block; }
