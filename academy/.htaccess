@@ -12,7 +12,7 @@ ErrorDocument 404 /404.html
 <IfModule mod_alias.c>
   RedirectMatch 302 ^/statistics/statistics-fundamental/notes/?$ https://app.tana.inc/shared/statistics-notes/MkVDTk5lMm1QbmJrLzNwVWRJTlEtYmVIMg==
   RedirectMatch 302 ^/statistics/statistics-fundamental/slides/?$ https://www.figma.com/slides/jZNxhatjJNglRjZ5YIIKAj
-  RedirectMatch 302 ^/statistics/statistics-fundamental/tutorial/?$ /statistics/statistics-fundamental/#tutorial
+  RedirectMatch 302 ^/statistics/statistics-fundamental/tutorial/?$ /login/?course=statistics-fundamental
 </IfModule>
 
 <IfModule mod_headers.c>
