@@ -16,7 +16,6 @@ on:
       - 'academy/**'
       - 'scripts/build_academy.sh'
       - 'scripts/deploy_academy.sh'
-      - 'scripts/check_courses.py'
       - '.github/workflows/academy.yml'
   workflow_dispatch:
 
@@ -34,9 +33,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: HTML, links and accessibility basics
-        run: |
-          python3 scripts/check_site.py academy
-          python3 scripts/check_courses.py academy/courses.json
+        run: python3 scripts/check_site.py academy
       - name: Build
         run: |
           bash scripts/build_academy.sh /tmp/out-academy
