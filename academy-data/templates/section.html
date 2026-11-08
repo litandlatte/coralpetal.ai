@@ -1,0 +1,19 @@
+{{> _head}}  <main id="main">
+    <section class="section-page">
+      <div class="wrap">
+        <p class="crumbs"><a href="/">Academy</a> / {{section_name}}</p>
+        <h1>{{section_name}}</h1>
+        <p class="lede">{{lede}}</p>
+
+{{courses}}
+        <div class="related">
+          <p class="eyebrow">Other sections</p>
+          <ul>
+{{other_sections}}
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+{{> _foot}}
