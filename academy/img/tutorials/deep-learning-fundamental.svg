@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-label="Deep Learning Fundamentals tutorial">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <linearGradient id="fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2603f" stop-opacity=".55"/><stop offset="1" stop-color="#f2603f" stop-opacity="0"/></linearGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <circle cx="600" cy="520" r="9" fill="#94a3b8" fill-opacity=".8"/><circle cx="640" cy="490" r="9" fill="#94a3b8" fill-opacity=".8"/><circle cx="690" cy="505" r="9" fill="#94a3b8" fill-opacity=".8"/><circle cx="730" cy="450" r="9" fill="#94a3b8" fill-opacity=".8"/><circle cx="770" cy="470" r="9" fill="#94a3b8" fill-opacity=".8"/><circle cx="810" cy="410" r="9" fill="#94a3b8" fill-opacity=".8"/><circle cx="850" cy="430" r="9" fill="#94a3b8" fill-opacity=".8"/><circle cx="900" cy="370" r="9" fill="#94a3b8" fill-opacity=".8"/><circle cx="940" cy="390" r="9" fill="#94a3b8" fill-opacity=".8"/><circle cx="980" cy="330" r="9" fill="#94a3b8" fill-opacity=".8"/><circle cx="1020" cy="350" r="9" fill="#94a3b8" fill-opacity=".8"/><circle cx="1060" cy="290" r="9" fill="#94a3b8" fill-opacity=".8"/><circle cx="1100" cy="300" r="9" fill="#94a3b8" fill-opacity=".8"/><circle cx="1150" cy="250" r="9" fill="#94a3b8" fill-opacity=".8"/><circle cx="700" cy="540" r="9" fill="#94a3b8" fill-opacity=".8"/><circle cx="880" cy="460" r="9" fill="#94a3b8" fill-opacity=".8"/><circle cx="1000" cy="400" r="9" fill="#94a3b8" fill-opacity=".8"/><circle cx="1120" cy="330" r="9" fill="#94a3b8" fill-opacity=".8"/><line x1="580" y1="545" x2="1180" y2="245" stroke="#f2603f" stroke-width="5" stroke-linecap="round"/>
+  <g font-family="Inter, Arial, sans-serif">
+    <text x="80" y="110" fill="#f2603f" font-size="22" font-weight="700" letter-spacing="4">CORAL PETAL AI ACADEMY</text>
+    <text x="80" y="200" fill="#ffffff" font-size="56" font-weight="700">Deep Learning</text><text x="80" y="266" fill="#ffffff" font-size="56" font-weight="700">Fundamentals</text>
+    <text x="80" y="328" fill="#cbd5e1" font-size="26">Module 1 · What deep learning is</text>
+  </g>
+  <rect x="0" y="704" width="1280" height="16" fill="#1e293b"/>
+  <rect x="0" y="704" width="140" height="16" fill="#f2603f"/>
+</svg>
