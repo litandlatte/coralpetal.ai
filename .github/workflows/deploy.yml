@@ -12,6 +12,12 @@ name: Build & deploy
 on:
   push:
     branches: [main]
+    # Academy-only changes ship through academy.yml, so they don't queue a main-site release.
+    paths-ignore:
+      - 'academy/**'
+      - 'scripts/build_academy.sh'
+      - 'scripts/deploy_academy.sh'
+      - '.github/workflows/academy.yml'
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -37,6 +43,12 @@ jobs:
           python3 scripts/check_site.py /tmp/out-prod
       - name: Deploy script syntax
         run: bash -n scripts/deploy_hostinger.sh
+      - name: Academy checks and build (academy.coralpetal.ai)
+        run: |
+          python3 scripts/check_site.py academy
+          bash scripts/build_academy.sh /tmp/out-academy
+          python3 scripts/check_site.py /tmp/out-academy
+          bash -n scripts/deploy_academy.sh
 
   deploy:
     name: Deploy · Production

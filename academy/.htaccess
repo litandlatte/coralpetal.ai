@@ -1,0 +1,22 @@
+# academy.coralpetal.ai — Apache rules for Hostinger. This folder sits inside the main
+# docroot but is its own site: a sub-folder .htaccess does NOT inherit the parent's
+# rewrite rules, so everything the academy needs is here.
+# HTTPS is forced by Hostinger (hPanel), not here (the CDN terminates TLS).
+
+Options -Indexes
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  # Not in search results until sections have content.
+  Header always set X-Robots-Tag "noindex, follow"
+  <FilesMatch "\.(css|svg|png|jpg|webp|woff2)$">
+    Header set Cache-Control "public, max-age=86400"
+  </FilesMatch>
+  <FilesMatch "\.(html|json)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>

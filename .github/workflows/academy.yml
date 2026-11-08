@@ -1,0 +1,88 @@
+# academy.coralpetal.ai — review locally, then release on Hostinger.
+#
+#   PR checks for the academy run inside "Site checks" (deploy.yml).
+#   push to main that touches the academy → checks → WAIT FOR ROHIT'S APPROVAL
+#   (production environment) → deploy into public_html/academy → verify live commit
+#
+# Local review:  scripts/preview.sh academy  →  http://localhost:8001
+# scripts/deploy_academy.sh refuses any path but ~/domains/coralpetal.ai/public_html/academy.
+
+name: Academy deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'academy/**'
+      - 'scripts/build_academy.sh'
+      - 'scripts/deploy_academy.sh'
+      - '.github/workflows/academy.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-academy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Academy checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: HTML, links and accessibility basics
+        run: python3 scripts/check_site.py academy
+      - name: Build
+        run: |
+          bash scripts/build_academy.sh /tmp/out-academy
+          python3 scripts/check_site.py /tmp/out-academy
+      - name: Deploy script syntax
+        run: bash -n scripts/deploy_academy.sh
+
+  deploy:
+    name: Deploy · Academy
+    if: github.ref_name == 'main'
+    needs: checks
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://academy.coralpetal.ai
+    env:
+      SITE_URL: https://academy.coralpetal.ai
+      HOSTINGER_HOST: ${{ vars.HOSTINGER_HOST }}
+      HOSTINGER_PORT: ${{ vars.HOSTINGER_PORT }}
+      HOSTINGER_USER: ${{ vars.HOSTINGER_USER }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: bash scripts/build_academy.sh _academy
+      - name: SSH setup (pinned host keys)
+        env:
+          KEY: ${{ secrets.HOSTINGER_SSH_KEY }}
+          KNOWN: ${{ vars.HOSTINGER_KNOWN_HOSTS }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id && chmod 600 ~/.ssh/id
+          printf '%s\n' "$KNOWN" > ~/.ssh/known_hosts
+      - name: Deploy to Hostinger (academy folder only)
+        run: bash scripts/deploy_academy.sh _academy
+      - name: Verify the live academy serves this commit
+        run: |
+          want="${GITHUB_SHA:0:7}"
+          for i in $(seq 1 18); do
+            got=$(curl -s -m 10 -H 'Cache-Control: no-cache' "$SITE_URL/version.json?ci=$RANDOM" || true)
+            echo "attempt $i: $got"
+            echo "$got" | grep -q "\"commit\":\"$want\"" && echo "✅ $SITE_URL serves $want" && exit 0
+            sleep 10
+          done
+          echo "::error::$SITE_URL did not serve commit $want within 3 minutes (DNS, SSL or CDN cache?)"
+          exit 1
+      - name: Check the main site is untouched
+        run: |
+          curl -sf -m 10 https://coralpetal.ai/version.json
+          curl -sf -m 10 -o /dev/null -w 'careers %{http_code}\n' https://careers.coralpetal.ai/
+      - name: Remove key
+        if: always()
+        run: rm -f ~/.ssh/id

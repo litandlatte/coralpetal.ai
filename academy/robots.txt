@@ -1,0 +1,3 @@
+# Coral Petal Academy: kept out of search until sections have content.
+User-agent: *
+Disallow: /
