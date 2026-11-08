@@ -308,3 +308,6 @@ a.tag:hover { border-color: var(--coral); color: var(--ink); }
 @media (max-width: 620px) { .course-grid { grid-template-columns: 1fr; } .search { flex-basis: 100%; } }
 .related-courses { margin-top: 56px; }
 #course h1 { font-size: clamp(1.9rem, 3.6vw, 2.6rem); max-width: 30ch; }
+
+/* Brand logo (2026-11-08): coral bloom photo, shown as a round mark. */
+.mark { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; display: block; }
