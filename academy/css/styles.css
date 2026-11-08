@@ -345,10 +345,3 @@ a.course-row:hover .course-row-go { transform: translateX(4px); }
 .access-card .btn { margin-top: 6px; }
 .access-email { margin: 10px 0 0; font-size: .9rem; color: var(--muted); user-select: all; }
 @media (max-width: 760px) { .login-wrap { grid-template-columns: 1fr; } }
-
-/* ---- Notes shown inside the academy (2026-11-08) ---- */
-.notes-page { padding: 24px 0 0; }
-.notes-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
-.notes-bar .crumbs { margin: 0; }
-.notes-frame-wrap { border-top: 1px solid var(--line); }
-.notes-frame { display: block; width: 100%; height: calc(100vh - 150px); min-height: 520px; border: 0; background: #fff; }
