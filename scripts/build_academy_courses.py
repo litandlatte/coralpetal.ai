@@ -161,6 +161,7 @@ def course_page(sec, c):
         for i, m in enumerate(c["modules"]))
     prereq = "\n".join(f"                <li>{escape(p)}</li>" for p in c["prerequisites"])
     material = f'              <a class="ref-box ref-main" href="{LOGIN}{c["slug"]}"><span class="ref-title">Tutorial</span><span class="ref-sub">Sign in to watch the video course</span></a>\n'
+    material += '              <span class="ref-box ref-disabled" aria-disabled="true" title="Coming soon"><span class="ref-title">Reference materials</span><span class="ref-sub">Coming soon</span></span>\n'
     if c.get("notes"):
         material += f'              <a class="ref-box" href="{base}notes" target="_blank" rel="noopener"><span class="ref-title">Notes</span><span class="ref-sub">Read the course notes</span></a>\n'
     if c.get("slides"):

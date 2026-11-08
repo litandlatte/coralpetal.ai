@@ -348,3 +348,8 @@ a.course-row:hover .course-row-go { transform: translateX(4px); }
 .access-card .btn { margin-top: 6px; }
 .access-email { margin: 10px 0 0; font-size: .9rem; color: var(--muted); user-select: all; }
 @media (max-width: 760px) { .login-wrap { grid-template-columns: 1fr; } }
+
+/* ---- Disabled course material box (Reference materials, 2026-11-08) ---- */
+.ref-box.ref-disabled { cursor: not-allowed; opacity: .55; }
+.ref-box.ref-disabled:hover { background: var(--bg-alt); border-color: var(--line); }
+.ref-box.ref-disabled:hover .ref-title { color: var(--ink); }
