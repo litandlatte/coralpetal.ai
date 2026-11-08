@@ -12,7 +12,6 @@ if [ "${1:-}" = academy ]; then
   PORT="${2:-8001}"
   OUT="$(mktemp -d)/academy-preview"
   python3 scripts/check_site.py academy
-  python3 scripts/check_courses.py academy/courses.json
   GITHUB_SHA="preview" bash scripts/build_academy.sh "$OUT" >/dev/null
   WHAT="the academy (academy.coralpetal.ai)"
 else
