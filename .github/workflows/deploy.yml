@@ -17,6 +17,7 @@ on:
       - 'academy/**'
       - 'scripts/build_academy.sh'
       - 'scripts/deploy_academy.sh'
+      - 'scripts/check_courses.py'
       - '.github/workflows/academy.yml'
   pull_request:
     branches: [main]
@@ -46,6 +47,7 @@ jobs:
       - name: Academy checks and build (academy.coralpetal.ai)
         run: |
           python3 scripts/check_site.py academy
+          python3 scripts/check_courses.py academy/courses.json
           bash scripts/build_academy.sh /tmp/out-academy
           python3 scripts/check_site.py /tmp/out-academy
           bash -n scripts/deploy_academy.sh
