@@ -162,9 +162,9 @@ def course_page(sec, c):
     prereq = "\n".join(f"                <li>{escape(p)}</li>" for p in c["prerequisites"])
     material = f'              <a class="ref-box ref-main" href="{LOGIN}{c["slug"]}"><span class="ref-title">Tutorial</span><span class="ref-sub">Sign in to watch the video course</span></a>\n'
     if c.get("notes"):
-        material += f'              <a class="ref-box" href="{base}notes"><span class="ref-title">Notes</span><span class="ref-sub">Read the course notes</span></a>\n'
+        material += f'              <a class="ref-box" href="{base}notes" target="_blank" rel="noopener"><span class="ref-title">Notes</span><span class="ref-sub">Read the course notes</span></a>\n'
     if c.get("slides"):
-        material += f'              <a class="ref-box" href="{base}slides"><span class="ref-title">Slides</span><span class="ref-sub">View the slide deck</span></a>\n'
+        material += f'              <a class="ref-box" href="{base}slides" target="_blank" rel="noopener"><span class="ref-title">Slides</span><span class="ref-sub">View the slide deck</span></a>\n'
     return render("course.html", page_title=escape(f'{c["title"]} | Coral Petal AI Academy'),
                   page_description=escape(f'{c["title"]} at Coral Petal AI Academy. {c["summary"]}'), page_path=base,
                   section_slug=sec["slug"], section_name=escape(sec["name"]), slug=c["slug"], title=escape(c["title"]),
