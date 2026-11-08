@@ -197,9 +197,12 @@ a { color: inherit; }
   display: flex; flex-direction: column; gap: 10px; height: 100%;
   background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
   padding: 24px 22px; text-decoration: none;
-  transition: border-color .15s, box-shadow .15s;
+  transition: background .15s, border-color .15s, box-shadow .15s;
 }
-.track:hover { border-color: #cbd5e1; box-shadow: 0 12px 32px -16px rgba(15, 23, 42, .18); }
+.track:hover { background: var(--coral-wash); border-color: var(--coral); box-shadow: 0 10px 28px -16px rgba(242, 96, 63, .45); }
+.track:hover h3 { color: var(--coral-deep); }
+.track-go { display: inline-block; transition: transform .15s; }
+.track:hover .track-go { transform: translateX(4px); }
 .track:focus-visible { outline: 3px solid var(--coral); outline-offset: 3px; }
 .track h3 { margin: 0; }
 .track p { margin: 0; font-size: .95rem; flex: 1; }
