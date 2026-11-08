@@ -8,7 +8,7 @@
        "prerequisites": ["School-level algebra", "Basic Python (variables, lists, functions) for the exercises", "No prior statistics needed"],
        "audience": "Aspiring data scientists, analysts, and engineers moving into machine learning.",
        "notes": "https://app.tana.inc/shared/statistics-notes/b0tlX1ZCcXJ0OENpLzNwVWRJTlEtYmVIMg==",
-       "slides": "https://www.figma.com/slides/jZNxhatjJNglRjZ5YIIKAj",
+       "slides": "https://www.figma.com/deck/jZNxhatjJNglRjZ5YIIKAj",
        "modules": [
          ["Why statistics matters", "Turning data into decisions while being honest about uncertainty, and the mistakes that cost the most."],
          ["Descriptive statistics", "Center, spread, shape and relationships, and why you always plot before you summarize."],
@@ -26,7 +26,7 @@
        "prerequisites": ["Statistics Fundamentals, or equivalent", "Basic Python and pandas"],
        "audience": "Analysts and engineers building their first predictive models.",
        "notes": "https://app.tana.inc/shared/machine-learning-notes/MkVDTk5lMm1QbmJrL1ZhU0dwNDcwZkt3dw==",
-       "slides": "https://www.figma.com/slides/HbvrP66S5PZhKYen2kUYOj",
+       "slides": "https://www.figma.com/deck/HbvrP66S5PZhKYen2kUYOj",
        "modules": [["What machine learning is"], ["The ML workflow"], ["Data preparation and feature engineering"], ["Core algorithms"], ["Model evaluation"], ["Overfitting, generalization and tuning"], ["Interpretability and responsible ML"], ["Tools and best practices"]]},
       {"slug": "mlops", "title": "MLOps", "level": "Intermediate",
        "summary": "Running machine learning in production: the ML lifecycle, maturity levels, data and model management, deployment, monitoring and maintenance.",
@@ -34,7 +34,7 @@
        "prerequisites": ["Machine Learning Fundamentals", "Comfort with Python and Git"],
        "audience": "Data scientists and ML engineers taking models from notebooks to production.",
        "notes": "https://app.tana.inc/shared/mlops-notes/MkVDTk5lMm1QbmJrL3NObHdhRkNkQ05tQQ==",
-       "slides": "https://www.figma.com/slides/eStTO6aNERA8Jgfjlfk4sY",
+       "slides": "https://www.figma.com/deck/eStTO6aNERA8Jgfjlfk4sY",
        "modules": [["What MLOps is"], ["The ML lifecycle"], ["Maturity levels"], ["Data and feature management"], ["Experimentation and model management"], ["Deployment and serving"], ["Monitoring and maintenance"], ["Best practices and pitfalls"]]},
       {"slug": "automl", "title": "AutoML", "level": "Intermediate",
        "summary": "What automated machine learning does, how it works under the hood, when to use it, its limits, and where the data scientist still matters.",
@@ -42,7 +42,7 @@
        "prerequisites": ["Machine Learning Fundamentals"],
        "audience": "Data scientists and analysts who want faster baselines without losing control.",
        "notes": "https://app.tana.inc/shared/automl-notes/MkVDTk5lMm1QbmJrL2c3OXRTZzZGSVpmYQ==",
-       "slides": "https://www.figma.com/slides/3X0L09szFnLvQKO6MJfNhI",
+       "slides": "https://www.figma.com/deck/3X0L09szFnLvQKO6MJfNhI",
        "modules": [["What AutoML is"], ["What gets automated"], ["How it works under the hood"], ["Popular tools"], ["When to use AutoML"], ["Limitations"], ["The data scientist's role with AutoML"], ["Best practices"]]}
     ]},
     {"slug": "deep-learning", "name": "Deep Learning", "motif": "scatter", "courses": [
@@ -52,7 +52,7 @@
        "prerequisites": ["Machine Learning Fundamentals, or equivalent", "Python and NumPy"],
        "audience": "Data scientists and ML engineers moving from classical models to neural networks.",
        "notes": "",
-       "slides": "https://www.figma.com/slides/sURhFGTYbYQMAcoknKLt9D",
+       "slides": "https://www.figma.com/deck/sURhFGTYbYQMAcoknKLt9D",
        "modules": [["What deep learning is"], ["Neural network building blocks"], ["Training: loss, backprop, optimizers"], ["Regularization and generalization"], ["Convolutional networks"], ["Sequence models and attention"], ["Transformers and transfer learning"], ["Tools and best practices"]]}
     ]},
     {"slug": "generative-ai", "name": "Generative AI", "motif": "tokens", "courses": [
@@ -62,7 +62,7 @@
        "prerequisites": ["Machine Learning Fundamentals is helpful", "Basic Python"],
        "audience": "Data scientists, engineers and technical leads starting with generative AI.",
        "notes": "https://app.tana.inc/shared/generative-ai-notes/MkVDTk5lMm1QbmJrL3llSWhXdGJTc2ctNg==",
-       "slides": "https://www.figma.com/slides/6giCat7HCSMeumVvHxG8ay",
+       "slides": "https://www.figma.com/deck/6giCat7HCSMeumVvHxG8ay",
        "modules": [["What generative AI is"], ["Model families"], ["How LLMs work"], ["Adapting models to your use case"], ["Data science use cases"], ["Evaluation"], ["Risks and responsible use"], ["Tools and best practices"]]},
       {"slug": "llmops", "title": "LLMOps", "level": "Intermediate",
        "summary": "Building and running LLM applications in production: the lifecycle, prompt management, RAG, fine-tuning, evaluation, monitoring, cost and safety.",
@@ -70,7 +70,7 @@
        "prerequisites": ["Generative AI Fundamentals", "Python and basic cloud concepts"],
        "audience": "Engineers and data scientists shipping LLM features.",
        "notes": "https://app.tana.inc/shared/llmops-notes/MkVDTk5lMm1QbmJrL0hpdzFCMVJkNEZZaw==",
-       "slides": "https://www.figma.com/slides/Hx6d4EmoGHa0mUbdmpO9wn",
+       "slides": "https://www.figma.com/deck/Hx6d4EmoGHa0mUbdmpO9wn",
        "modules": [["What LLMOps is"], ["The LLM application lifecycle"], ["Prompt management"], ["Retrieval-augmented generation (RAG)"], ["Fine-tuning and model customization"], ["Evaluation"], ["Deployment, monitoring and cost"], ["Safety, governance and pitfalls"]]}
     ]},
     {"slug": "agentic-ai", "name": "Agentic AI", "motif": "graph", "courses": [
@@ -80,7 +80,7 @@
        "prerequisites": ["Generative AI Fundamentals", "Python"],
        "audience": "Engineers and architects designing agentic systems for the enterprise.",
        "notes": "https://app.tana.inc/shared/agentic-ai-notes/MkVDTk5lMm1QbmJrL0dDSEU1dUcwLXZ5VQ==",
-       "slides": "https://www.figma.com/slides/KEDdETT6gguticflBuu7jI",
+       "slides": "https://www.figma.com/deck/KEDdETT6gguticflBuu7jI",
        "modules": [["What agentic AI is"], ["Core building blocks"], ["Agent design patterns"], ["Multi-agent systems"], ["Frameworks and protocols"], ["Data science use cases"], ["Evaluation and reliability"], ["Safety, governance and best practices"]]}
     ]},
     {"slug": "cloud-computing", "name": "Cloud Computing", "motif": "badge", "courses": [
@@ -90,7 +90,7 @@
        "prerequisites": ["Basic IT and networking concepts", "No cloud experience needed"],
        "audience": "Data scientists, analysts and engineers who need to build and run work on the cloud.",
        "notes": "",
-       "slides": "https://www.figma.com/slides/Mm6TPb9YW3EVvMNIlgduLe",
+       "slides": "https://www.figma.com/deck/Mm6TPb9YW3EVvMNIlgduLe",
        "modules": [["What cloud computing is"], ["Service models (IaaS, PaaS, SaaS)"], ["Core services: compute, storage, networking"], ["Data and analytics services"], ["ML and AI on the cloud"], ["Security and identity"], ["Cost management"], ["Best practices and pitfalls"]]}
     ]},
     {"slug": "certifications", "name": "Certifications", "motif": "badge", "courses": [
@@ -100,7 +100,7 @@
        "prerequisites": ["Hands-on time with Azure", "Basic networking and operating system concepts"],
        "audience": "Cloud administrators and engineers preparing for AZ-104.",
        "notes": "https://app.tana.inc/shared/az-104-notes/MkVDTk5lMm1QbmJrL0VsMTdrd293Q1RySg==",
-       "slides": "https://www.figma.com/slides/axdD49rTDHUV2Yj1tKS9UJ",
+       "slides": "https://www.figma.com/deck/axdD49rTDHUV2Yj1tKS9UJ",
        "modules": [["Exam at a glance"], ["Skills measured"], ["Identities and governance"], ["Storage"], ["Compute"], ["Virtual networking"], ["Monitoring, backup and recovery"], ["How to prepare and exam tips"]]},
       {"slug": "az-305", "title": "AZ-305: Azure Solutions Architect", "level": "Advanced",
        "summary": "Exam preparation for Microsoft AZ-305: guiding frameworks, identity and governance, data storage, business continuity and infrastructure design.",
@@ -108,7 +108,7 @@
        "prerequisites": ["AZ-104 level Azure administration skills", "Experience designing cloud solutions"],
        "audience": "Architects and senior engineers preparing for AZ-305.",
        "notes": "https://app.tana.inc/shared/az-305-notes/MkVDTk5lMm1QbmJrLzRQUTc5UlpUeEJpeQ==",
-       "slides": "https://www.figma.com/slides/MX2uhI0BYNpgG54uU0ykja",
+       "slides": "https://www.figma.com/deck/MX2uhI0BYNpgG54uU0ykja",
        "modules": [["Exam at a glance"], ["Skills measured"], ["Guiding frameworks"], ["Identity, governance and monitoring"], ["Data storage"], ["Business continuity"], ["Infrastructure design"], ["How to prepare and exam tips"]]},
       {"slug": "ai-103", "title": "AI-103: Azure AI Apps and Agents Developer", "level": "Intermediate",
        "summary": "Exam preparation for Microsoft AI-103: planning Azure AI solutions, generative AI and agents, computer vision, text and speech, and information extraction.",
@@ -116,7 +116,7 @@
        "prerequisites": ["Python", "Basic Azure familiarity", "Generative AI Fundamentals is helpful"],
        "audience": "Developers building AI apps and agents on Azure.",
        "notes": "https://app.tana.inc/shared/ai-103-notes/MkVDTk5lMm1QbmJrL2U5VWNYUkV1SnplcA==",
-       "slides": "https://www.figma.com/slides/wnO6OMYESX2ERiWXCBbgrY",
+       "slides": "https://www.figma.com/deck/wnO6OMYESX2ERiWXCBbgrY",
        "modules": [["Exam at a glance"], ["Skills measured"], ["Plan and manage an Azure AI solution"], ["Generative AI and agentic solutions"], ["Computer vision"], ["Text analysis and speech"], ["Information extraction"], ["How to prepare and exam tips"]]},
       {"slug": "ab-100", "title": "AB-100: Agentic AI Business Solutions Architect", "level": "Advanced",
        "summary": "Exam preparation for Microsoft AB-100: requirements and AI strategy, costs and benefits, designing agents and business apps, and deployment with ALM.",
@@ -124,7 +124,7 @@
        "prerequisites": ["Experience with Microsoft business applications", "Agentic AI Fundamentals is helpful"],
        "audience": "Solution architects designing agentic business solutions.",
        "notes": "https://app.tana.inc/shared/ab-100-notes/MkVDTk5lMm1QbmJrL01kLUdkc0Z3V1ZNYQ==",
-       "slides": "https://www.figma.com/slides/e7sSE3ZrMqfByW4zRLJS94",
+       "slides": "https://www.figma.com/deck/e7sSE3ZrMqfByW4zRLJS94",
        "modules": [["Exam at a glance"], ["Skills measured"], ["Plan: requirements and AI strategy"], ["Plan: costs and benefits"], ["Design: agents and extensibility"], ["Design: prebuilt agents and business apps"], ["Deploy: monitoring, testing and ALM"], ["How to prepare and exam tips"]]}
     ]},
     {"slug": "miscellaneous", "name": "Miscellaneous Topics", "motif": "hex", "courses": [
@@ -134,7 +134,7 @@
        "prerequisites": ["Python and pandas", "Basic familiarity with latitude and longitude data"],
        "audience": "Data scientists working with location data.",
        "notes": "https://app.tana.inc/shared/h3-notes/MkVDTk5lMm1QbmJrL3ZzcXFIYXZsODEzYQ==",
-       "slides": "https://www.figma.com/slides/4nJM2WBWsdJRY7op5LUeVH",
+       "slides": "https://www.figma.com/deck/4nJM2WBWsdJRY7op5LUeVH",
        "modules": [["What H3 is"], ["How the grid is built"], ["Resolutions and cell IDs"], ["Core operations"], ["Why hexagons: H3 vs other grids"], ["Using H3 in data science"], ["Tools and ecosystem"], ["Pitfalls and best practices"]]}
     ]}
   ]
