@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Coral Petal Academy: learn data science and AI</title>
-  <meta name="description" content="Coral Petal Academy: structured learning in statistics, machine learning, deep learning, generative AI, agentic AI, cloud computing and certifications.">
+  <title>Coral Petal AI Academy: courses in data science and AI</title>
+  <meta name="description" content="Coral Petal AI Academy: courses and certification preparation in statistics, machine learning, deep learning, generative AI, agentic AI and cloud computing.">
   <meta name="robots" content="noindex, follow">
   <link rel="canonical" href="https://academy.coralpetal.ai/">
   <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
@@ -25,8 +25,8 @@
       </a>
       <nav aria-label="Primary">
         <ul>
-          <li><a href="/#sections">Sections</a></li>
-          <li><a href="https://coralpetal.ai/">Coral Petal</a></li>
+          <li><a href="/#catalog">Courses</a></li>
+          <li><a href="https://coralpetal.ai/">Coral Petal AI</a></li>
           <li><a class="btn btn-small" href="mailto:academy@coralpetal.ai">Talk to us</a></li>
         </ul>
       </nav>
@@ -36,62 +36,44 @@
   <main id="main">
     <section class="hero hero-academy">
       <div class="wrap">
-        <p class="eyebrow">Coral Petal Academy</p>
+        <p class="eyebrow">Coral Petal AI Academy</p>
         <h1>Learn the AI your business is adopting.</h1>
         <p class="lede">Structured learning from the statistics underneath to the advanced agentic systems on top.</p>
-        <div class="cta-row">
-          <a class="btn" href="#sections">Browse the sections</a>
-          <a class="btn btn-ghost" href="https://coralpetal.ai/">About Coral Petal</a>
-        </div>
+        <ul class="topic-links" aria-label="Browse by topic">
+          <li><a href="/?tag=Statistics#catalog" data-tag="Statistics">Statistics</a></li>
+          <li><a href="/?tag=Machine+Learning#catalog" data-tag="Machine Learning">Machine Learning</a></li>
+          <li><a href="/?tag=Deep+Learning#catalog" data-tag="Deep Learning">Deep Learning</a></li>
+          <li><a href="/?tag=Generative+AI#catalog" data-tag="Generative AI">Generative AI</a></li>
+          <li><a href="/?tag=Agentic+AI#catalog" data-tag="Agentic AI">Agentic AI</a></li>
+          <li><a href="/?tag=Cloud+Computing#catalog" data-tag="Cloud Computing">Cloud Computing</a></li>
+          <li><a href="/?tag=Certification#catalog" data-tag="Certification">Certifications</a></li>
+          <li><a href="/?tag=Miscellaneous#catalog" data-tag="Miscellaneous">Miscellaneous Topics</a></li>
+        </ul>
       </div>
     </section>
 
-    <section class="section" id="sections">
+    <section class="catalog" id="catalog">
       <div class="wrap">
-        <p class="eyebrow">Sections</p>
-        <h2>Eight sections, foundations to frontier.</h2>
-        <ul class="tracks">
-          <li><a class="track" href="/statistics/">
-            <h3>Statistics</h3>
-            <p>Probability, distributions, inference and experiment design: the foundations every model rests on.</p>
-            <span class="track-go">View section →</span>
-          </a></li>
-          <li><a class="track" href="/machine-learning/">
-            <h3>Machine Learning</h3>
-            <p>Supervised and unsupervised learning, feature engineering, evaluation and putting models into production.</p>
-            <span class="track-go">View section →</span>
-          </a></li>
-          <li><a class="track" href="/deep-learning/">
-            <h3>Deep Learning</h3>
-            <p>Neural networks from first principles: training, convolutional and sequence models, and transformers.</p>
-            <span class="track-go">View section →</span>
-          </a></li>
-          <li><a class="track" href="/generative-ai/">
-            <h3>Generative AI</h3>
-            <p>Large language models, prompting, retrieval-augmented generation, fine-tuning and evaluation.</p>
-            <span class="track-go">View section →</span>
-          </a></li>
-          <li><a class="track" href="/agentic-ai/">
-            <h3>Agentic AI</h3>
-            <p>AI agents that plan, use tools and act: architectures, orchestration, memory, guardrails and evaluation.</p>
-            <span class="track-go">View section →</span>
-          </a></li>
-          <li><a class="track" href="/cloud-computing/">
-            <h3>Cloud Computing</h3>
-            <p>The cloud platforms and services used to build, deploy and scale data and AI systems.</p>
-            <span class="track-go">View section →</span>
-          </a></li>
-          <li><a class="track" href="/certifications/">
-            <h3>Certifications</h3>
-            <p>Study guides for industry certifications in data, AI and cloud, mapped to the official exam objectives.</p>
-            <span class="track-go">View section →</span>
-          </a></li>
-          <li><a class="track" href="/miscellaneous/">
-            <h3>Miscellaneous Topics</h3>
-            <p>Tools, techniques and ideas that sit between the other sections.</p>
-            <span class="track-go">View section →</span>
-          </a></li>
-        </ul>
+        <div class="catalog-head">
+          <h2>All courses</h2>
+          <div class="search">
+            <label for="q" class="sr-only">Search courses</label>
+            <input type="search" id="q" placeholder="Search courses, e.g. RAG or AI-103" autocomplete="off">
+          </div>
+        </div>
+        <div class="catalog-body">
+          <aside class="filters" aria-label="Filters">
+            <details open>
+              <summary>Filters</summary>
+              <div id="filters"></div>
+            </details>
+          </aside>
+          <div class="results">
+            <div class="results-bar"><span id="count" aria-live="polite"></span><div id="active" class="active-filters"></div></div>
+            <ul id="results" class="course-grid"></ul>
+            <noscript><p>Turn on JavaScript to browse the course catalog.</p></noscript>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -126,6 +108,6 @@
     </defs>
   </svg>
 
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script src="/js/catalog.js"></script>
 </body>
 </html>
