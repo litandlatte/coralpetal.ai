@@ -20,3 +20,5 @@ Placeholders are `{{name}}`; `{{> _head}}` and `{{> _foot}}` include the shared 
 Lists (modules, prerequisites, course material boxes, course rows) are rendered as HTML by the
 script and dropped into one placeholder each. Styling lives in `academy/css/styles.css`
 (bump the `?v=` in `_head.html` after changing it, so browsers reload it).
+
+Course material boxes (build script): Tutorial (sign-in), Reference materials (disabled for now: code, datasets and research papers used in the tutorial), Notes, Slides.
