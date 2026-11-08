@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/styles.css?v=20261108b">
+  <link rel="stylesheet" href="/css/styles.css?v=20261108c">
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -49,12 +49,11 @@
         <div class="course-layout">
           <div class="course-main">
             <section class="tutorial-box" id="tutorial" aria-labelledby="tutorial-h">
-              <div class="tutorial-frame">
-                <div class="tutorial-placeholder">
-                  <span class="play" aria-hidden="true"></span>
-                  <p>The tutorial video will appear here.</p>
-                </div>
-              </div>
+              <a class="tutorial-frame tutorial-poster" href="/login/?course=statistics-fundamental" aria-label="Play the Statistics Fundamentals tutorial (sign-in required)">
+                <img src="/img/tutorials/statistics-fundamental.svg" alt="" width="1280" height="720">
+                <span class="play" aria-hidden="true"></span>
+                <span class="lock-note">Sign in to watch</span>
+              </a>
               <div class="tutorial-caption">
                 <h2 id="tutorial-h">Tutorial</h2>
                 <p>Work through the course module by module. Use the notes and slides alongside the video.</p>
@@ -91,7 +90,7 @@
             </div>
             <div class="side-box side-refs">
               <h2>Course material</h2>
-              <a class="ref-box ref-main" href="/statistics/statistics-fundamental/tutorial"><span class="ref-title">Tutorial</span><span class="ref-sub">Watch the video course</span></a>
+              <a class="ref-box ref-main" href="/login/?course=statistics-fundamental"><span class="ref-title">Tutorial</span><span class="ref-sub">Sign in to watch the video course</span></a>
               <a class="ref-box" href="/statistics/statistics-fundamental/notes"><span class="ref-title">Notes</span><span class="ref-sub">Read the course notes</span></a>
               <a class="ref-box" href="/statistics/statistics-fundamental/slides"><span class="ref-title">Slides</span><span class="ref-sub">View the slide deck</span></a>
             </div>
