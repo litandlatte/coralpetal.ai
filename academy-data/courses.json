@@ -51,7 +51,7 @@
        "tools": "Python: PyTorch, Hugging Face",
        "prerequisites": ["Machine Learning Fundamentals, or equivalent", "Python and NumPy"],
        "audience": "Data scientists and ML engineers moving from classical models to neural networks.",
-       "notes": "",
+       "notes": "https://app.tana.inc/shared/deep-learning-notes/b0tlX1ZCcXJ0OENpL3VySEdkZWhEVFpFMw==",
        "slides": "https://www.figma.com/deck/sURhFGTYbYQMAcoknKLt9D",
        "modules": [["What deep learning is"], ["Neural network building blocks"], ["Training: loss, backprop, optimizers"], ["Regularization and generalization"], ["Convolutional networks"], ["Sequence models and attention"], ["Transformers and transfer learning"], ["Tools and best practices"]]}
     ]},
@@ -89,7 +89,7 @@
        "tools": "Azure, AWS or Google Cloud free tier",
        "prerequisites": ["Basic IT and networking concepts", "No cloud experience needed"],
        "audience": "Data scientists, analysts and engineers who need to build and run work on the cloud.",
-       "notes": "",
+       "notes": "https://app.tana.inc/shared/cloud-computing-notes/b0tlX1ZCcXJ0OENpL3JHaTIxYjdLZHRFVA==",
        "slides": "https://www.figma.com/deck/Mm6TPb9YW3EVvMNIlgduLe",
        "modules": [["What cloud computing is"], ["Service models (IaaS, PaaS, SaaS)"], ["Core services: compute, storage, networking"], ["Data and analytics services"], ["ML and AI on the cloud"], ["Security and identity"], ["Cost management"], ["Best practices and pitfalls"]]}
     ]},
