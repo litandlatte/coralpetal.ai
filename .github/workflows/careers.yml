@@ -1,0 +1,88 @@
+# careers.coralpetal.ai — review locally, then release on Hostinger.
+#
+#   PR checks for the careers run inside "Site checks" (deploy.yml).
+#   push to main that touches the careers → checks → WAIT FOR ROHIT'S APPROVAL
+#   (production environment) → deploy into public_html/careers → verify live commit
+#
+# Local review:  scripts/preview.sh careers  →  http://localhost:8001
+# scripts/deploy_careers.sh refuses any path but ~/domains/coralpetal.ai/public_html/careers.
+
+name: Careers deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'careers/**'
+      - 'scripts/build_careers.sh'
+      - 'scripts/deploy_careers.sh'
+      - '.github/workflows/careers.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-careers
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Careers checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: HTML, links and accessibility basics
+        run: python3 scripts/check_site.py careers
+      - name: Build
+        run: |
+          bash scripts/build_careers.sh /tmp/out-careers
+          python3 scripts/check_site.py /tmp/out-careers
+      - name: Deploy script syntax
+        run: bash -n scripts/deploy_careers.sh
+
+  deploy:
+    name: Deploy · Careers
+    if: github.ref_name == 'main'
+    needs: checks
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://careers.coralpetal.ai
+    env:
+      SITE_URL: https://careers.coralpetal.ai
+      HOSTINGER_HOST: ${{ vars.HOSTINGER_HOST }}
+      HOSTINGER_PORT: ${{ vars.HOSTINGER_PORT }}
+      HOSTINGER_USER: ${{ vars.HOSTINGER_USER }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: bash scripts/build_careers.sh _careers
+      - name: SSH setup (pinned host keys)
+        env:
+          KEY: ${{ secrets.HOSTINGER_SSH_KEY }}
+          KNOWN: ${{ vars.HOSTINGER_KNOWN_HOSTS }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id && chmod 600 ~/.ssh/id
+          printf '%s\n' "$KNOWN" > ~/.ssh/known_hosts
+      - name: Deploy to Hostinger (careers folder only)
+        run: bash scripts/deploy_careers.sh _careers
+      - name: Verify the live careers serves this commit
+        run: |
+          want="${GITHUB_SHA:0:7}"
+          for i in $(seq 1 18); do
+            got=$(curl -s -m 10 -H 'Cache-Control: no-cache' "$SITE_URL/version.json?ci=$RANDOM" || true)
+            echo "attempt $i: $got"
+            echo "$got" | grep -q "\"commit\":\"$want\"" && echo "✅ $SITE_URL serves $want" && exit 0
+            sleep 10
+          done
+          echo "::error::$SITE_URL did not serve commit $want within 3 minutes (DNS, SSL or CDN cache?)"
+          exit 1
+      - name: Check the main site is untouched
+        run: |
+          curl -sf -m 10 https://coralpetal.ai/version.json
+          curl -sf -m 10 -o /dev/null -w 'academy %{http_code}\n' https://academy.coralpetal.ai/
+      - name: Remove key
+        if: always()
+        run: rm -f ~/.ssh/id
