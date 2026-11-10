@@ -353,3 +353,7 @@ a.course-row:hover .course-row-go { transform: translateX(4px); }
 .ref-box.ref-disabled { cursor: not-allowed; opacity: .55; }
 .ref-box.ref-disabled:hover { background: var(--bg-alt); border-color: var(--line); }
 .ref-box.ref-disabled:hover .ref-title { color: var(--ink); }
+
+/* Careers job pages */
+.job-block ul { margin: 14px 0 0; padding-left: 1.2em; display: flex; flex-direction: column; gap: 8px; }
+.job-block p { max-width: 68ch; }
