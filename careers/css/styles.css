@@ -357,3 +357,5 @@ a.course-row:hover .course-row-go { transform: translateX(4px); }
 /* Careers job pages */
 .job-block ul { margin: 14px 0 0; padding-left: 1.2em; display: flex; flex-direction: column; gap: 8px; }
 .job-block p { max-width: 68ch; }
+.apply-box h2 { font-weight: 700; color: var(--ink); }
+.apply-box .btn { margin-top: 16px; }
