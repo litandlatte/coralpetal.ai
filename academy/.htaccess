@@ -22,6 +22,7 @@ ErrorDocument 404 /404.html
   RedirectMatch 302 ^/machine-learning/automl/notes/?$ https://app.tana.inc/shared/automl-notes/MkVDTk5lMm1QbmJrL2c3OXRTZzZGSVpmYQ==
   RedirectMatch 302 ^/machine-learning/automl/slides/?$ https://www.figma.com/deck/3X0L09szFnLvQKO6MJfNhI
   RedirectMatch 302 ^/deep-learning/deep-learning-fundamental/tutorial/?$ /login/?course=deep-learning-fundamental
+  RedirectMatch 302 ^/deep-learning/deep-learning-fundamental/notes/?$ https://app.tana.inc/shared/deep-learning-notes/b0tlX1ZCcXJ0OENpL3VySEdkZWhEVFpFMw==
   RedirectMatch 302 ^/deep-learning/deep-learning-fundamental/slides/?$ https://www.figma.com/deck/sURhFGTYbYQMAcoknKLt9D
   RedirectMatch 302 ^/generative-ai/generative-ai-fundamental/tutorial/?$ /login/?course=generative-ai-fundamental
   RedirectMatch 302 ^/generative-ai/generative-ai-fundamental/notes/?$ https://app.tana.inc/shared/generative-ai-notes/MkVDTk5lMm1QbmJrL3llSWhXdGJTc2ctNg==
@@ -33,6 +34,7 @@ ErrorDocument 404 /404.html
   RedirectMatch 302 ^/agentic-ai/agentic-ai-fundamental/notes/?$ https://app.tana.inc/shared/agentic-ai-notes/MkVDTk5lMm1QbmJrL0dDSEU1dUcwLXZ5VQ==
   RedirectMatch 302 ^/agentic-ai/agentic-ai-fundamental/slides/?$ https://www.figma.com/deck/KEDdETT6gguticflBuu7jI
   RedirectMatch 302 ^/cloud-computing/cloud-computing-fundamental/tutorial/?$ /login/?course=cloud-computing-fundamental
+  RedirectMatch 302 ^/cloud-computing/cloud-computing-fundamental/notes/?$ https://app.tana.inc/shared/cloud-computing-notes/b0tlX1ZCcXJ0OENpL3JHaTIxYjdLZHRFVA==
   RedirectMatch 302 ^/cloud-computing/cloud-computing-fundamental/slides/?$ https://www.figma.com/deck/Mm6TPb9YW3EVvMNIlgduLe
   RedirectMatch 302 ^/certifications/az-104/tutorial/?$ /login/?course=az-104
   RedirectMatch 302 ^/certifications/az-104/notes/?$ https://app.tana.inc/shared/az-104-notes/MkVDTk5lMm1QbmJrL0VsMTdrd293Q1RySg==
