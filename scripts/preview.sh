@@ -4,6 +4,7 @@
 #   scripts/preview.sh 8080           → main site on another port
 #   scripts/preview.sh academy        → academy.coralpetal.ai: checks, build, http://localhost:8001
 #   scripts/preview.sh academy 8081   → academy on another port
+#   scripts/preview.sh careers        → careers.coralpetal.ai: checks, build, http://localhost:8002
 # Ctrl+C to stop. Nothing is deployed.
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -14,6 +15,12 @@ if [ "${1:-}" = academy ]; then
   python3 scripts/check_site.py academy
   GITHUB_SHA="preview" bash scripts/build_academy.sh "$OUT" >/dev/null
   WHAT="the academy (academy.coralpetal.ai)"
+elif [ "${1:-}" = careers ]; then
+  PORT="${2:-8002}"
+  OUT="$(mktemp -d)/careers-preview"
+  python3 scripts/check_site.py careers
+  GITHUB_SHA="preview" bash scripts/build_careers.sh "$OUT" >/dev/null
+  WHAT="careers (careers.coralpetal.ai)"
 else
   PORT="${1:-8000}"
   OUT="$(mktemp -d)/coralpetal-preview"

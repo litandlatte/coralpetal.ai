@@ -18,6 +18,10 @@ on:
       - 'scripts/build_academy.sh'
       - 'scripts/deploy_academy.sh'
       - '.github/workflows/academy.yml'
+      - 'careers/**'
+      - 'scripts/build_careers.sh'
+      - 'scripts/deploy_careers.sh'
+      - '.github/workflows/careers.yml'
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -49,6 +53,12 @@ jobs:
           bash scripts/build_academy.sh /tmp/out-academy
           python3 scripts/check_site.py /tmp/out-academy
           bash -n scripts/deploy_academy.sh
+      - name: Careers checks and build (careers.coralpetal.ai)
+        run: |
+          python3 scripts/check_site.py careers
+          bash scripts/build_careers.sh /tmp/out-careers
+          python3 scripts/check_site.py /tmp/out-careers
+          bash -n scripts/deploy_careers.sh
 
   deploy:
     name: Deploy · Production

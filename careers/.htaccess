@@ -1,0 +1,8 @@
+# careers.coralpetal.ai — Apache rules for Hostinger. This folder sits inside the main
+# docroot but is its own site: a sub-folder .htaccess does NOT inherit the parent's
+# rewrite rules, so everything careers needs is here.
+# HTTPS is forced by Hostinger (hPanel), not here (the CDN terminates TLS).
+
+Options -Indexes
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
