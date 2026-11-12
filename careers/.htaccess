@@ -6,3 +6,13 @@
 Options -Indexes
 DirectoryIndex index.html
 ErrorDocument 404 /404.html
+
+# BEGIN MAINTENANCE (temporary, 2026-11-12) — delete this block (or revert its PR) to go live again.
+# Every page answers 503 + maintenance.html, so search engines keep the site indexed.
+ErrorDocument 503 /maintenance.html
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !^/(maintenance\.html|version\.json|img/|\.well-known/)
+  RewriteRule ^ - [R=503,L]
+</IfModule>
+# END MAINTENANCE
